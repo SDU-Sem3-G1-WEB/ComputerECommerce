@@ -70,15 +70,10 @@ namespace ComputerECommerce.Pages.Admin.Products
                 {
                     ProductDto.ImageFile.CopyTo(fileStream);
                 }
-                if(product.Image != "/images/products/laptop.jpg")
+                string oldFilePath = Path.Combine(env.WebRootPath, product.Image);
+                if (System.IO.File.Exists(oldFilePath))
                 {
-                    string oldFilePath = env.WebRootPath + product.Image;
-                    Debug.WriteLine("\n\n\nTrying to delete file: " + oldFilePath);
-                    if(System.IO.File.Exists(oldFilePath))
-                    {
-                        Debug.WriteLine("Deleting file: " + oldFilePath);
-                        System.IO.File.Delete(oldFilePath);
-                    }
+                    System.IO.File.Delete(oldFilePath);
                 }
                 newFileName = "/images/products/" + newFileName;
             }

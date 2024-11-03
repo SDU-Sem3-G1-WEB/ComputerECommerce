@@ -22,12 +22,35 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
                         </li>
+                        @if (LoginModel.UserRole == "Admin")
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Admin/Products/Index">Admin Page</a>
+                            </li>
+                        }
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Admin/Products/Index">Edit Products</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
                         </li>
+                    </ul>
+                    <ul class="navbar-nav">
+                        @{
+                            var currentPage = ViewContext.ActionDescriptor.DisplayName;
+                        }
+                        @if (string.IsNullOrEmpty(LoginModel.UserRole) && !currentPage.Contains("Login"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Login">Log In</a>
+                            </li>
+                        }
+                        else if (!string.IsNullOrEmpty(LoginModel.UserRole))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Login" onclick="document.getElementById('logoutForm').submit();">Log Out</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>
@@ -41,14 +64,17 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2024 - ComputerECommerce - <a asp-area="" asp-page="/Privacy">Privacy</a>
+            &copy; 2023 - ComputerECommerce - <a asp-area="" asp-page="/Privacy">Privacy</a>
         </div>
     </footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
 
-    @await RenderSectionAsync("Scripts", required: false)
+    <form id="logoutForm" method="post" asp-page="/Login" style="display:none;">
+        <input type="hidden" name="logout" value="true" />
+    </form>
 </body>
 </html>
