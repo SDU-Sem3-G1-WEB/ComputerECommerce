@@ -35,9 +35,6 @@ obj/
 *.snupkg
 packages/
 
-# Entity Framework Migrations
-Migrations/
-
 # ASP.NET Scaffolding
 ScaffoldingReadMe.txt
 
