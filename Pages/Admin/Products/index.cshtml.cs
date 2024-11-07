@@ -9,7 +9,7 @@ namespace ComputerECommerce.Pages.Admin.Products
     {
         private readonly DataContext context;
         public List<Product> Products = new List<Product>();
-
+        public List<Category> Categories = new List<Category>();
         public IndexModel(DataContext context)
         {
             this.context = context;
@@ -18,6 +18,7 @@ namespace ComputerECommerce.Pages.Admin.Products
         public void OnGet()
         {
             Products = context.Products.ToList();
+            Categories = context.Categories.ToList();
         }
     }
 }

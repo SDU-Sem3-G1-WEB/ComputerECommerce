@@ -28,7 +28,7 @@
             <tr>
                 <td>@product.Id</td>
                 <td>@product.Name</td>
-                <td>@product.CategoryId</td>
+                <td>@Model.Categories.FirstOrDefault(x => x.Id == product.CategoryId)?.Name</td>
                 <td>@product.Quantity</td>
                 <td>@product.Price</td>
                 <td><img src="@product.Image" width="100"/></td>
