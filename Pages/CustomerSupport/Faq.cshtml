@@ -1,0 +1,45 @@
+@page
+@model ComputerECommerce.Pages.FaqModel
+@{
+    ViewData["Title"] = "FAQ";
+}
+
+<div class="row flex">
+    <h2 class="my-4">FAQ</h2>
+    <div class="col-md-4 mb-4">
+        <a class="button text-dark" asp-page="/Contact">Contact</a>
+    </div>
+</div>
+
+<div class="row flex">
+    <div class="col-4">
+        <div class="list-group" id="FAQ" role="tablist">
+            <a class="list-group-item list-group-item-action fade show active" data-toggle="list" href="#home" role="tab">Payment</a>
+            <a class="list-group-item list-group-item-action" data-toggle="list" href="#profile" role="tab">Account</a>
+            <a class="list-group-item list-group-item-action" data-toggle="list" href="#messages" role="tab">Messages</a>
+            <a class="list-group-item list-group-item-action" data-toggle="list" href="#settings" role="tab">Delivery</a>
+        </div>
+    </div>
+    <div class="col-8">
+        <div class="tab-content">
+            <div class="tab-pane fade show active" id="home" role="tabpanel">
+                Lorem ipsum odor amet, consectetuer adipiscing elit. Hendrerit nulla efficitur quam; quisque faucibus nibh. Rutrum fermentum mollis ante lobortis nulla hendrerit cubilia. Fringilla finibus adipiscing rutrum dolor vel condimentum est lobortis.
+            </div>
+            <div class="tab-pane" id="profile" role="tabpanel">
+                Lorem ipsum odor amet, consectetuer adipiscing elit. Mauris tempus ligula natoque facilisi egestas. Mi diam consectetur fusce nisi, et cubilia imperdiet consectetur. Posuere tortor sapien porttitor mattis sociosqu faucibus magna. Nascetur litora sodales viverra lacinia odio euismod ultrices.
+            </div>
+            <div class="tab-pane" id="messages" role="tabpanel">
+                Lorem ipsum odor amet, consectetuer adipiscing elit. Amet tortor mauris orci finibus pellentesque. Efficitur imperdiet enim quisque nec maximus viverra tempor. Quis praesent luctus iaculis facilisis nascetur aliquet.
+            </div>
+            <div class="tab-pane" id="settings" role="tabpanel">
+                Lorem ipsum odor amet, consectetuer adipiscing elit. Accumsan suscipit facilisi lacus, scelerisque augue purus. Rhoncus id lacinia condimentum luctus pharetra purus nisl duis. Mattis egestas purus neque nisl ornare.
+            </div>
+        </div>
+    </div>
+    <script>
+        $('#FAQ a').on('click', function (e) {
+            e.preventDefault()
+            $(this).tab('show')
+        });
+    </script>
+</div>
