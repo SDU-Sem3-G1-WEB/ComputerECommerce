@@ -15,6 +15,7 @@ namespace ComputerECommerce.Data
             {
                 context.Products.RemoveRange(context.Products);
                 context.Categories.RemoveRange(context.Categories);
+                context.Users.RemoveRange(context.Users);
                 context.SaveChanges();
 
                 context.Categories.AddRange(
@@ -130,6 +131,24 @@ namespace ComputerECommerce.Data
                         Image = "/images/products/laptop.jpg",
                         Quantity = 10,
                         CategoryId = "1"
+                    }
+                );
+                context.Users.AddRange(
+                    new User
+                    {
+                        Id = Guid.NewGuid().ToString(),
+                        Name = "Admin",
+                        Email = "admin@admin.com",
+                        Password = "admin",
+                        Role = "Admin"
+                    },
+                    new User
+                    {
+                        Id = Guid.NewGuid().ToString(),
+                        Name = "User",
+                        Email = "user@user.com",
+                        Password = "user",
+                        Role = "User"
                     }
                 );
 
