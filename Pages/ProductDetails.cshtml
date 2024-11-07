@@ -1,0 +1,24 @@
+@page "{id}"
+@model ComputerECommerce.Pages.ProductDetailsModel
+@{
+    ViewData["Title"] = "Product Details";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <img src="@Model.Product.Image" class="card-img-top img-fluid" alt="@Model.Product.Name">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title">@Model.Product.Name</h2>
+                    <h4 class="card-subtitle mb-2 text-muted">@Model.Product.Price.ToString("C")</h4>
+                    <p class="card-text">@Model.Product.Description</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

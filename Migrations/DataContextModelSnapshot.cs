@@ -36,7 +36,6 @@ namespace ComputerECommerce.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("ParentCategoryId")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
@@ -104,6 +103,8 @@ namespace ComputerECommerce.Migrations
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
 
                     b.ToTable("OrderItems");
                 });
@@ -205,6 +206,15 @@ namespace ComputerECommerce.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("ComputerECommerce.Models.OrderItem", b =>
+                {
+                    b.HasOne("ComputerECommerce.Models.Order", null)
+                        .WithMany("OrderItems")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("ComputerECommerce.Models.Product", b =>
                 {
                     b.HasOne("ComputerECommerce.Models.Category", "Category")
@@ -228,6 +238,11 @@ namespace ComputerECommerce.Migrations
             modelBuilder.Entity("ComputerECommerce.Models.Category", b =>
                 {
                     b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("ComputerECommerce.Models.Order", b =>
+                {
+                    b.Navigation("OrderItems");
                 });
 
             modelBuilder.Entity("ComputerECommerce.Models.ShoppingCart", b =>

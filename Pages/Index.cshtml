@@ -1,10 +1,49 @@
 ﻿@page
-@model IndexModel
+@model ComputerECommerce.Pages.IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<h2 class="my-4">Products</h2>
+
+<div class="d-flex justify-content-between mb-3">
+    <form method="get" class="d-flex flex-column align-items-start">
+        <label class="form-label mb-2">Filter by price:</label>
+        <div class="btn-group mb-3" role="group">
+            <button type="submit" name="priceRange" value="100-300" class="btn btn-outline-primary @(Model.PriceRange == "100-300" ? "active" : "")">100-300</button>
+            <button type="submit" name="priceRange" value="300-400" class="btn btn-outline-primary @(Model.PriceRange == "300-400" ? "active" : "")">300-400</button>
+            <button type="submit" name="priceRange" value="400-500" class="btn btn-outline-primary @(Model.PriceRange == "400-500" ? "active" : "")">400-500</button>
+            <button type="submit" name="priceRange" value="500-800" class="btn btn-outline-primary @(Model.PriceRange == "500-800" ? "active" : "")">500-800</button>
+            <button type="submit" name="priceRange" value="800+" class="btn btn-outline-primary @(Model.PriceRange == "800+" ? "active" : "")">800+</button>
+        </div>
+    </form>
+
+    <div>
+        <label for="sortOrder" class="form-label">Sort by:</label>
+        <select id="sortOrder" class="form-select w-auto" onchange="location.href='?priceRange=@Model.PriceRange&sortOrder=' + this.value">
+            <option value="" selected="@((string.IsNullOrEmpty(Model.SortOrder)) ? "selected" : null)">Select</option>
+            <option value="name_asc" selected="@(Model.SortOrder == "name_asc" ? "selected" : null)">Name (A-Z)</option>
+            <option value="name_desc" selected="@(Model.SortOrder == "name_desc" ? "selected" : null)">Name (Z-A)</option>
+            <option value="price_asc" selected="@(Model.SortOrder == "price_asc" ? "selected" : null)">Price (Low-High)</option>
+            <option value="price_desc" selected="@(Model.SortOrder == "price_desc" ? "selected" : null)">Price (High-Low)</option>
+        </select>
+    </div>
 </div>
+
+<div class="row">
+    @foreach (var product in Model.Products)
+    {
+        <div class="col-md-4 mb-4">
+            <a asp-page="/ProductDetails" asp-route-id="@product.Id" class="text-decoration-none text-dark">
+                <div class="card h-100">
+                    <img src="@product.Image" class="card-img-top" alt="@product.Name">
+                    <div class="card-body">
+                        <h5 class="card-title">@product.Name</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">@product.Price.ToString("C")</h6>
+                    </div>
+                </div>
+            </a>
+        </div>
+    }
+</div>
+

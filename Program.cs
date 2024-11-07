@@ -10,11 +10,13 @@ builder.Services.AddDbContext<DataContext>(o => o.UseNpgsql(builder.Configuratio
 
 var app = builder.Build();
 
-// Apply migrations automatically
+// Apply migrations and seed the database automatically
 using (var scope = app.Services.CreateScope())
 {
-    var dataContext = scope.ServiceProvider.GetRequiredService<DataContext>();
+    var services = scope.ServiceProvider;
+    var dataContext = services.GetRequiredService<DataContext>();
     dataContext.Database.Migrate();
+    SeedData.Initialize(services);
 }
 
 // Configure the HTTP request pipeline.
