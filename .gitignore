@@ -1,8 +1,12 @@
 # Ignore build output directories
 bin/
 obj/
+# Ignore build output directories
+bin/
+obj/
 
 # User-specific files
+*.user
 *.user
 *.rsuser
 *.suo
@@ -35,12 +39,14 @@ obj/
 *.snupkg
 packages/
 
-# Entity Framework Migrations
-Migrations/
-
 # ASP.NET Scaffolding
 ScaffoldingReadMe.txt
 
+# DotNetTool specific files
+.dotnet_tool/
+
+# Coverage results
+coverage/
 # DotNetTool specific files
 .dotnet_tool/
 
@@ -50,8 +56,15 @@ coverage/
 *.coveragexml
 
 # Publish output
+# Publish output
 publish/
 
+# Temporary files
+*.tmp
+*.temp
+
+# Ignore auto-generated AssemblyInfo files
+**/AssemblyInfo.cs
 # Temporary files
 *.tmp
 *.temp
