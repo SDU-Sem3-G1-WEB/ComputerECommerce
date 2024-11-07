@@ -15,15 +15,19 @@ namespace ComputerECommerce.Pages.Admin.Products
         private readonly IWebHostEnvironment env;
         public string ErrorMessage { get; set; } = String.Empty;
         public string SuccessMessage { get; set; } = String.Empty;
+        public List<Category> Categories { get; set; } = new List<Category>();
 
         public CreateModel(IWebHostEnvironment env, DataContext context)
         {
             this.env = env;
             this.context = context;
         }
+
         public void OnGet()
         {
+            Categories = context.Categories.ToList();
         }
+
         public void OnPost()
         {
             if (ProductDto.ImageFile == null)
@@ -49,7 +53,7 @@ namespace ComputerECommerce.Pages.Admin.Products
                 Price = ProductDto.Price,
                 Quantity = ProductDto.Quantity,
                 Image = fileName,
-                CategoryId = "Laptop" //temporary
+                CategoryId = ProductDto.CategoryId
             };
 
             context.Products.Add(product);

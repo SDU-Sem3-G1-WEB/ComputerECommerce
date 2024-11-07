@@ -1,25 +1,18 @@
 @page
-@model ComputerECommerce.Pages.Admin.Products.CreateModel
+@model ComputerECommerce.Pages.Admin.Products.EditModel
 @{
     ViewData["Title"] = "Create Product";
 }
 <div class="row">
     <div class="col-md-8 mx-auto rounded border p-3">
-        <h2 class="text-center mb-5">New Product</h2>
-
-        @if (Model.ErrorMessage.Length > 0)
-        {
-            <div class="alert alert-danger" role="alert">
-                @Model.ErrorMessage
-            </div>
-        }
-        @if (Model.SuccessMessage.Length > 0)
-        {
-            <div class="alert alert-success" role="alert">
-                @Model.SuccessMessage
-            </div>
-        }
+        <h2 class="text-center mb-5">Edit Product</h2>
         <form method="post" enctype="multipart/form-data">
+            <div class="row mb-3">
+                <label class="col-sm-4 col-form-label">ID</label>
+                <div class="col-sm-8">
+                    <input readonly class="form-control-plaintext w-100" value="@Model.Product.Id" />
+                </div>
+            </div>
             <div class="row mb-3">
                 <label class="col-sm-4 col-form-label">Name</label>
                 <div class="col-sm-8">
@@ -47,7 +40,7 @@
                         }
                         else
                         {
-                            <option value="">Categories could not be loaded</option>
+                            <option value="">No category</option>
                         }
                     </select>
                 </div>
@@ -64,6 +57,12 @@
                 <div class="col-sm-8">
                     <input class="form-control" asp-for="ProductDto.Description" />
                     <span asp-validation-for="ProductDto.Description" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label class="col-sm-4 col-form-label"></label>
+                <div class="col-sm-8">
+                    <img src="/products/@Model.Product.Image" width="200" />
                 </div>
             </div>
             <div class="row mb-3">

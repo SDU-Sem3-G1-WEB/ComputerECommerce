@@ -14,8 +14,8 @@ namespace ComputerECommerce.Models
         public IFormFile? ImageFile { get; set; }
         [Required]
         public int Quantity { get; set; }
-        //[Required]
-        public Category? Category { get; set; }
+        [Required]
+        public string CategoryId { get; set; } = String.Empty;
 
         public void Clear()
         {
@@ -24,7 +24,7 @@ namespace ComputerECommerce.Models
             Price = 0;
             ImageFile = null;
             Quantity = 0;
-            Category = null;
+            CategoryId = String.Empty;
         }
     }
 }
