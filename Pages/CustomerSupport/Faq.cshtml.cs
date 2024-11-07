@@ -1,18 +1,20 @@
+using ComputerECommerce.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace ComputerECommerce.Pages;
-
-public class FaqModel : PageModel
+namespace ComputerECommerce.Pages.CustomerSupport
 {
-    private readonly ILogger<PrivacyModel> _logger;
-
-    public FaqModel(ILogger<PrivacyModel> logger)
+    public class FaqModel : PageModel
     {
-        _logger = logger;
-    }
+        private readonly DataContext _context;
 
-    public void OnGet()
-    {
+        public FaqModel(DataContext context)
+        {
+            _context = context;
+        }
+
+        public void OnGet()
+        {
+        }
     }
 }

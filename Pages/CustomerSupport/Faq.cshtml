@@ -1,15 +1,17 @@
 @page
-@model ComputerECommerce.Pages.FaqModel
+@model ComputerECommerce.Pages.CustomerSupport.FaqModel
 @{
     ViewData["Title"] = "FAQ";
 }
 
-<div class="row flex">
-    <h2 class="my-4">FAQ</h2>
-    <div class="col-md-4 mb-4">
-        <a class="button text-dark" asp-page="/CustomerSupport/Contact">Contact</a>
-    </div>
+<h2 class="my-4">
+    Contact Us
+</h2>
+<div class="d-flex justify-content-between mb-3">
+    <a class="btn btn-primary align-self-end" asp-page="/CustomerSupport/Contact">Contact</a>
 </div>
+
+<h2 class="my-4">FAQ</h2>
 
 <div class="row flex">
     <div class="col-4">
