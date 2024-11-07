@@ -1,9 +1,6 @@
 using ComputerECommerce.Data;
 using Microsoft.EntityFrameworkCore;
 
-using ComputerECommerce.Data;
-using Microsoft.EntityFrameworkCore;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
