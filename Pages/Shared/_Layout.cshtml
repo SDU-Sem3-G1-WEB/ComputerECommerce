@@ -9,6 +9,9 @@
     <link rel="stylesheet" href="~/ComputerECommerce.styles.css" asp-append-version="true" />
 </head>
 <body>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
@@ -28,6 +31,12 @@
                             <a class="nav-link text-dark" asp-area="" asp-page="/Admin/Products/Index">Edit Products</a>
                         </li>
                         }
+                        <li>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/CustomerSupport/Faq">Customer Support</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/CustomerSupport/Faq">Customer Support</a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
                         </li>
@@ -65,9 +74,6 @@
         </div>
     </footer>
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
 
     <form id="logoutForm" method="post" asp-page="/Login" style="display:none;">
