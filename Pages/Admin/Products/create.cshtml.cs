@@ -43,16 +43,17 @@ namespace ComputerECommerce.Pages.Admin.Products
             }
             Product product = new Product
             {
+                Id = Guid.NewGuid().ToString(),
                 Name = ProductDto.Name,
                 Description = ProductDto.Description,
                 Price = ProductDto.Price,
                 Quantity = ProductDto.Quantity,
                 Image = fileName,
-                //CategoryId = ProductDto.Category.Id
+                CategoryId = "Laptop" //temporary
             };
 
-            //context.Products.Add(product);
-            //context.SaveChanges();
+            context.Products.Add(product);
+            context.SaveChanges();
 
             ProductDto.Clear();
 

@@ -14,7 +14,7 @@ namespace ComputerECommerce.Models
         public IFormFile? ImageFile { get; set; }
         [Required]
         public int Quantity { get; set; }
-        [Required]
+        //[Required]
         public Category? Category { get; set; }
 
         public void Clear()

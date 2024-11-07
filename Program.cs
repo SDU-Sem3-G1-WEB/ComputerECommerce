@@ -15,6 +15,8 @@ using (var scope = app.Services.CreateScope())
 {
     var dataContext = scope.ServiceProvider.GetRequiredService<DataContext>();
     dataContext.Database.Migrate();
+    DataSeeder seeder = new DataSeeder(dataContext);
+    seeder.Seed();
 }
 
 // Configure the HTTP request pipeline.
