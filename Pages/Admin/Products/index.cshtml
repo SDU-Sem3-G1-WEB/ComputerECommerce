@@ -1,0 +1,48 @@
+@page
+@model ComputerECommerce.Pages.Admin.Products.IndexModel
+@{
+
+}
+
+<h2 class="text-center mb-5">Products</h2>
+<div class="row mb-5">
+<div class="col">
+<div class="col">
+        <a class='btn btn-primary' href='/Admin/Products/Create'>New Product</a>
+    </div>
+</div>
+<table class="table">
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Category</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Image</th>
+        <th>Action</th>
+    </tr>
+    @if(Model.Products != null)
+    {
+        foreach(var product in Model.Products)
+        {
+            <tr>
+                <td>@product.Id</td>
+                <td>@product.Name</td>
+                <td>@product.CategoryId</td>
+                <td>@product.Quantity</td>
+                <td>@product.Price</td>
+                <td><img src="/products/@product.Image" width="100"/></td>
+                <td style="white-space: nowrap">
+                    <a class="btn btn-primary btn-sm" href="/Admin/Products/edit?id=@product.Id">Edit</a>
+                    <a class="btn btn-danger btn-sm" href="/Admin/Products/delete?id=@product.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    }
+    else
+    {
+        <tr>
+            <td colspan="7">No products available.</td>
+        </tr>
+    }
+</table>
