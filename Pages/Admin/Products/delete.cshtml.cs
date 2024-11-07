@@ -14,8 +14,9 @@ namespace ComputerECommerce.Pages.Admin.Products
             this.env = env;
             this.context = context;
         }
-        public void OnGet(int? id)
+        public void OnGet(string? id)
         {
+            Debug.WriteLine("Delete Product Id: " + id);
             if(id == null)
             {
                 Debug.WriteLine("Product Id is null");

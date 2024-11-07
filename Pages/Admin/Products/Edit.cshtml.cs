@@ -43,7 +43,7 @@ namespace ComputerECommerce.Pages.Admin.Products
             Product = product;
         }
 
-        public void OnPost(int? id)
+        public void OnPost(string? id)
         {
             if(id == null)
             {
