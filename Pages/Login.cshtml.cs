@@ -50,11 +50,6 @@ public class LoginModel : PageModel
 
         UserRole = user.Role;
 
-        if (user.Role == "Admin")
-        {
-            return RedirectToPage("/Admin/Products/Index");
-        }
-
         return RedirectToPage("./Index");
     }
 }
