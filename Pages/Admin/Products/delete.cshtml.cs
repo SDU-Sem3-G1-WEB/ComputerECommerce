@@ -30,11 +30,16 @@ namespace ComputerECommerce.Pages.Admin.Products
                 Response.Redirect("/Admin/Products/Index");
                 return;
             }
-            string filePath = Path.Combine(env.WebRootPath, "products", product.Image);
-            if(System.IO.File.Exists(filePath))
+
+            if(product.Image != "/images/products/laptop.jpg")
             {
-                Debug.WriteLine("Deleting file: " + filePath);
-                System.IO.File.Delete(filePath);
+                string filePath = env.WebRootPath + product.Image;
+                Debug.WriteLine("\n\n\nTrying to delete file: " + filePath);
+                if(System.IO.File.Exists(filePath))
+                {
+                    Debug.WriteLine("Deleting file: " + filePath);
+                    System.IO.File.Delete(filePath);
+                }
             }
 
             context.Products.Remove(product);

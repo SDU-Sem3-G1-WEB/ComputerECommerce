@@ -66,16 +66,17 @@ namespace ComputerECommerce.Pages.Admin.Products
             if (ProductDto.ImageFile != null)
             {
                 newFileName = Guid.NewGuid() + ProductDto.ImageFile!.FileName;
-                string filePath = Path.Combine(env.WebRootPath, "products", newFileName);
+                string filePath = Path.Combine(env.WebRootPath, "images", "products", newFileName);
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
                     ProductDto.ImageFile.CopyTo(fileStream);
                 }
-                string oldFilePath = Path.Combine(env.WebRootPath, "products", product.Image);
+                string oldFilePath = Path.Combine(env.WebRootPath, product.Image);
                 if (System.IO.File.Exists(oldFilePath))
                 {
                     System.IO.File.Delete(oldFilePath);
                 }
+                newFileName = "/images/products/" + newFileName;
             }
 
             product.Name = ProductDto.Name;
@@ -83,7 +84,7 @@ namespace ComputerECommerce.Pages.Admin.Products
             product.Price = ProductDto.Price;
             product.Quantity = ProductDto.Quantity;
             product.Image = newFileName;
-            product.CategoryId = "Laptop"; //temporary
+            product.CategoryId = ProductDto.CategoryId;
 
             context.SaveChanges();
 

@@ -40,7 +40,7 @@ namespace ComputerECommerce.Pages.Admin.Products
                 return;
             }
             string fileName = Guid.NewGuid() + ProductDto.ImageFile!.FileName;
-            string filePath = Path.Combine(env.WebRootPath, "products", fileName);
+            string filePath = Path.Combine(env.WebRootPath, "images", "products", fileName);
             using (var fileStream = new FileStream(filePath, FileMode.Create))
             {
                 ProductDto.ImageFile.CopyTo(fileStream);
@@ -52,7 +52,7 @@ namespace ComputerECommerce.Pages.Admin.Products
                 Description = ProductDto.Description,
                 Price = ProductDto.Price,
                 Quantity = ProductDto.Quantity,
-                Image = fileName,
+                Image = "/images/products/" + fileName,
                 CategoryId = ProductDto.CategoryId
             };
 
