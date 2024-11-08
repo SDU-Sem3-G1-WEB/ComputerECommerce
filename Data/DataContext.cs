@@ -15,6 +15,7 @@ namespace ComputerECommerce.Data
         public DbSet<Models.ShoppingCart> ShoppingCarts { get; set; }
         public DbSet<Models.ShoppingCartItem> ShoppingCartItems { get; set; }
         public DbSet<Models.User> Users { get; set; }
+        public DbSet<Models.Ticket> Tickets { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

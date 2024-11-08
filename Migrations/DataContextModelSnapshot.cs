@@ -142,7 +142,34 @@ namespace ComputerECommerce.Migrations
 
                     b.ToTable("Products");
                 });
+            modelBuilder.Entity("ComputerECommerce.Models.Ticket", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
 
+                    b.Property<string>("Topic")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
+                    b.Property<string>("TicketDate")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("Tickets");
+                });
             modelBuilder.Entity("ComputerECommerce.Models.ShoppingCart", b =>
                 {
                     b.Property<string>("Id")
@@ -225,6 +252,17 @@ namespace ComputerECommerce.Migrations
 
                     b.Navigation("Category");
                 });
+            modelBuilder.Entity("ComputerECommerce.Models.Ticket", b =>
+                {
+                    b.HasOne("ComputerECommerce.Models.Category", "Category")
+                        .WithMany("Tickets")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+                });
+
 
             modelBuilder.Entity("ComputerECommerce.Models.ShoppingCartItem", b =>
                 {
@@ -238,6 +276,7 @@ namespace ComputerECommerce.Migrations
             modelBuilder.Entity("ComputerECommerce.Models.Category", b =>
                 {
                     b.Navigation("Products");
+                    b.Navigation("Tickets");
                 });
 
             modelBuilder.Entity("ComputerECommerce.Models.Order", b =>

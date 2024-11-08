@@ -12,21 +12,31 @@
             <div class="row mb-3">
                 <label class="col-sm-4 col-form-label">Name</label>
                 <div class="col-sm-8">
-                    <input class="form-control"/>
+                    <input class="form-control" asp-for="TicketDto.Name"/>
                     @* Name validation goes here *@
+                    <span asp-validation-for="TicketDto.Name" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label class="col-sm-4 col-form-label">Topic</label>
+                <div class="col-sm-8">
+                    <input class="form-control" asp-for="TicketDto.Topic"/>
+                    @* Topic validation goes here *@
+                    <span asp-validation-for="TicketDto.Topic" class="text-danger"></span>
                 </div>
             </div>
             <div class="row mb-3">
                 <label class="col-sm-4 col-form-label">Email</label>
                 <div class="col-sm-8">
-                    <input class="form-control"/>
+                    <input class="form-control" asp-for="TicketDto.Email"/>
                     @* Email validation goes here *@
+                    <span asp-validation-for="TicketDto.Email" class="text-danger"></span>
                 </div>
             </div>
             <div class="row mb-3">
                 <label class="col-sm-4 col-form-label">Category</label>
                 <div class="col-sm-8">
-                    <select class="form-select">
+                    <select class="form-select" asp-for="TicketDto.CategoryId">
                         @if (Model.Categories != null)
                         {
                             foreach (var category in Model.Categories)
@@ -44,8 +54,9 @@
             <div class="row mb-3">
                 <label class="col-sm-4 col-form-label">Description</label>
                 <div class="col-sm-8">
-                    <textarea class="form-control" rows="3"></textarea>
+                    <textarea class="form-control" rows="3" asp-for="TicketDto.Description"></textarea>
                     @* validation for Description goes here *@
+                    <span asp-validation-for="TicketDto.Description" class="text-danger"></span>
                 </div>
             </div>
             <div class="row mb-3">
