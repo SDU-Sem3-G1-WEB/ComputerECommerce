@@ -10,9 +10,9 @@ namespace ComputerECommerce.Pages.CustomerSupport
     public class ContactModel : PageModel
     {
         private readonly DataContext _context;
-        [BindProperty]
         private string ErrorMessage { get; set; } = String.Empty;
         private string SuccessMessage { get; set; } = String.Empty;
+        [BindProperty]
         public TicketDto TicketDto { get; set; } = new TicketDto();
         public List<Category> Categories { get; set; } = new List<Category>();
         public ContactModel(DataContext context)
