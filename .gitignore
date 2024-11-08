@@ -30,6 +30,7 @@ obj/
 
 # Visual Studio Code specific files
 .vscode/
+.vs/
 
 # Rider specific files
 .idea/
