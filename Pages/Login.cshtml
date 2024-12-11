@@ -1,7 +1,9 @@
 @page
 @model LoginModel
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 @{
-    ViewData["Title"] = "Login";
+    ViewData["Title"] = Localizer["Login"];
 }
 
 <h2>Welcome!</h2>
