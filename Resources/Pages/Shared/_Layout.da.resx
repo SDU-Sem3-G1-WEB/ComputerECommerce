@@ -126,6 +126,9 @@
   <data name="Home" xml:space="preserve">
     <value>Forside</value>
   </data>
+  <data name="Log In" xml:space="preserve">
+    <value>Log Ind</value>
+  </data>
   <data name="Privacy" xml:space="preserve">
     <value>Privatlivspolitik</value>
   </data>

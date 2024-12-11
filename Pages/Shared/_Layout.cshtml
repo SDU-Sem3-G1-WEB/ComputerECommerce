@@ -47,7 +47,7 @@
                         @if (string.IsNullOrEmpty(LoginModel.UserRole) && !currentPage.Contains("Login"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-page="/Login">Log In</a>
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Login">@Localizer["Log In"]</a>
                             </li>
                         }
                         else if (!string.IsNullOrEmpty(LoginModel.UserRole))
