@@ -1,4 +1,6 @@
 ﻿<!DOCTYPE html>
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -23,19 +25,19 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">@Localizer["Home"]</a>
                         </li>
                         @if (LoginModel.UserRole == "Admin")
                         {
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Admin/Products/Index">Edit Products</a>
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Admin/Products/Index">@Localizer["Edit Products"]</a>
                         </li>
                         }
                         <li>
-                            <a class="nav-link text-dark" asp-area="" asp-page="/CustomerSupport/Faq">Customer Support</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/CustomerSupport/Faq">@Localizer["Customer Support"]</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">@Localizer["Privacy"]</a>
                         </li>
                     </ul>
                     <ul class="navbar-nav">
