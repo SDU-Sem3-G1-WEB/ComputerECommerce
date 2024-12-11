@@ -3,6 +3,7 @@ using System;
 using ComputerECommerce.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ComputerECommerce.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20241211162405_UpdateUserCredentials")]
+    partial class UpdateUserCredentials
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -241,6 +244,10 @@ namespace ComputerECommerce.Migrations
             modelBuilder.Entity("ComputerECommerce.Models.UserCredentials", b =>
                 {
                     b.Property<string>("hashedEmail")
+                        .HasColumnType("text");
+
+                    b.Property<string>("hashSalt")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("hashedPassword")

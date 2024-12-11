@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
 using ComputerECommerce.Models;
+using BCrypt.Net;
 
 namespace ComputerECommerce.Data
 {
@@ -16,6 +17,7 @@ namespace ComputerECommerce.Data
                 context.Products.RemoveRange(context.Products);
                 context.Categories.RemoveRange(context.Categories);
                 context.Users.RemoveRange(context.Users);
+                context.UserCredentials.RemoveRange(context.UserCredentials);
                 context.SaveChanges();
 
                 context.Categories.AddRange(
@@ -139,7 +141,6 @@ namespace ComputerECommerce.Data
                         Id = Guid.NewGuid().ToString(),
                         Name = "Admin",
                         Email = "admin@admin.com",
-                        Password = "admin",
                         Role = "Admin"
                     },
                     new User
@@ -147,8 +148,20 @@ namespace ComputerECommerce.Data
                         Id = Guid.NewGuid().ToString(),
                         Name = "User",
                         Email = "user@user.com",
-                        Password = "user",
                         Role = "User"
+                    }
+                );
+                string salt = BCrypt.Net.BCrypt.GenerateSalt();
+                context.UserCredentials.AddRange(
+                    new UserCredentials
+                    {
+                        hashedEmail = "admin@admin.com",
+                        hashedPassword = BCrypt.Net.BCrypt.HashPassword("admin"),
+                    },
+                    new UserCredentials
+                    {
+                        hashedEmail = "user@user.com",
+                        hashedPassword = BCrypt.Net.BCrypt.HashPassword("user"),
                     }
                 );
 

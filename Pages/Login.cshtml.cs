@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
 using ComputerECommerce.Data;
+using BCrypt.Net;
 
 public class LoginModel : PageModel
 {
@@ -20,7 +21,7 @@ public class LoginModel : PageModel
     public class InputModel
     {
         [Required]
-        public string Username { get; set; }
+        public string Email { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
@@ -39,12 +40,17 @@ public class LoginModel : PageModel
             return Page();
         }
 
-        var user = _context.Users
-            .FirstOrDefault(u => u.Email == Input.Username && u.Password == Input.Password);
-
+        var user = _context.Users.SingleOrDefault(u => u.Email == Input.Email);
         if (user == null)
         {
-            ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+            ModelState.AddModelError(string.Empty, "Email not found.");
+            return Page();
+        }
+
+        var credentials = _context.UserCredentials.SingleOrDefault(c => c.hashedEmail == Input.Email);
+        if (credentials == null || !BCrypt.Net.BCrypt.Verify(Input.Password, credentials.hashedPassword))
+        {
+            ModelState.AddModelError(string.Empty, "Incorrect password.");
             return Page();
         }
 
