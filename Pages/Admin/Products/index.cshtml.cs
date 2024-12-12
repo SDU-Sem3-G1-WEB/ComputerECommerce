@@ -1,26 +1,60 @@
-using ComputerECommerce.Data;
-using ComputerECommerce.Models;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using ComputerECommerce.Models;
+using Services;
 
 namespace ComputerECommerce.Pages.Admin.Products
 {
     public class IndexModel : PageModel
     {
-        private readonly DataContext context;
+        private readonly ProductService productService;
+        private readonly CategoryService categoryService;
         public List<Product> Products = new List<Product>();
-
         public List<Category> Categories = new List<Category>();
 
-        public IndexModel(DataContext context)
+        public IndexModel(ProductService productService, CategoryService categoryService)
         {
-            this.context = context;
-            // Constructor code
+            this.productService = productService;
+            this.categoryService = categoryService;
         }
-        public void OnGet()
+
+        public async Task<IActionResult> OnGetAsync()
         {
-            Products = context.Products.ToList();
-            Categories = context.Categories.ToList();
+            await Protect();
+            Products = productService.GetAllProducts();
+            Categories = categoryService.GetAllCategories();
+            return Page();
+        }
+        public string GetCategoryForProduct(int categoryId)
+        {
+            foreach (var category in Categories)
+            {
+                if (category.Id == categoryId)
+                {
+                    return category.Name!;
+                }
+            }
+            return "Unknown Category";
+        }
+
+        private async Task Protect()
+        {
+            var userId = HttpContext.Session.GetInt32("UserId");
+            if (userId == null)
+            {
+                // Redirect to login if user is not logged in
+                Response.Redirect("/Account/Login");
+                await Task.CompletedTask;
+                return;
+            }
+
+            var userType = HttpContext.Session.GetString("UserType");
+            if (userType != "ADMIN")
+            {
+                // Redirect to unauthorized page if user is not an admin
+                Response.Redirect("/Unauthorised");
+                await Task.CompletedTask;
+            }
         }
     }
 }

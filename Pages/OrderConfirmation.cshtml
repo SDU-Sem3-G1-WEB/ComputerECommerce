@@ -1,0 +1,19 @@
+@page "{orderId}"
+@model ComputerECommerce.Pages.OrderConfirmationModel
+@{
+    ViewData["Title"] = "Order Confirmation";
+}
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col text-center">
+            <h2>Order Successful</h2>
+            <p class="mt-4">Thank you for your order! Your order ID is <strong>@Model.OrderId</strong>.</p>
+            <p>Please send the payment to the following bank account:</p>
+            <p><strong>Bank Account: 123456789</strong></p>
+            <p>Include your order ID in the payment comment or use MobilePay.</p>
+            <p><strong>MobilePay: +123456789</strong></p>
+            <p class="mt-4">We will process your order once the payment is received.</p>
+        </div>
+    </div>
+</div>

@@ -1,90 +1,67 @@
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using ComputerECommerce.Data;
+using Services;
 using ComputerECommerce.Models;
+using System.Linq;
 
 namespace ComputerECommerce.Pages
 {
     public class IndexModel : PageModel
     {
-        private readonly DataContext _context;
+        private readonly ProductService productService;
+        public List<Product> Products { get; set; } = new List<Product>();
+        
+        [BindProperty(SupportsGet = true)]
+        public string PriceRange { get; set; } = string.Empty;
 
-        public IndexModel(DataContext context)
+        [BindProperty(SupportsGet = true)]
+        public string SortOrder { get; set; } = string.Empty;
+
+        public IndexModel(ProductService productService)
         {
-            _context = context;
+            this.productService = productService;
         }
 
-        public IList<Product> Products { get; set; }
-        public string PriceRange { get; set; }
-        public string SortOrder { get; set; }
-
-        public async Task OnGetAsync(string priceRange, string sortOrder)
+        public async Task OnGetAsync()
         {
-            PriceRange = priceRange;
-            SortOrder = sortOrder;
+            var products = await Task.Run(() => productService.GetAllProducts());
 
-            var products = from p in _context.Products
-                        select p;
+            products = FilterProducts(products, PriceRange);
+            products = SortProducts(products, SortOrder);
 
-            // Apply filtering based on the price range
-            if (!string.IsNullOrEmpty(PriceRange))
-            {
-                var ranges = PriceRange.Split('-');
-                if (ranges.Length == 2 && decimal.TryParse(ranges[0], out var minPrice) && decimal.TryParse(ranges[1], out var maxPrice))
-                {
-                    products = products.Where(p => p.Price >= minPrice && p.Price <= maxPrice);
-                }
-                else if (PriceRange == "800+")
-                {
-                    products = products.Where(p => p.Price > 800);
-                }
-            }
-
-            // Apply sorting
-            if (!string.IsNullOrEmpty(SortOrder))
-            {
-                switch (SortOrder)
-                {
-                    case "name_asc":
-                        products = products.OrderBy(p => p.Name);
-                        break;
-                    case "name_desc":
-                        products = products.OrderByDescending(p => p.Name);
-                        break;
-                    case "price_asc":
-                        products = products.OrderBy(p => p.Price);
-                        break;
-                    case "price_desc":
-                        products = products.OrderByDescending(p => p.Price);
-                        break;
-                }
-            }
-
-            Products = await products.ToListAsync();
+            Products = products;
         }
 
-
-        public bool IsProductInPriceRange(Product product)
+        private List<Product> FilterProducts(List<Product> products, string priceRange)
         {
-            if (string.IsNullOrEmpty(PriceRange))
+            if (string.IsNullOrEmpty(priceRange))
             {
-                return true;
+                return products;
             }
 
-            var ranges = PriceRange.Split('-');
-            if (ranges.Length == 2)
+            var ranges = priceRange.Split('-');
+            if (ranges.Length == 2 && decimal.TryParse(ranges[0], out var minPrice) && decimal.TryParse(ranges[1], out var maxPrice))
             {
-                if (decimal.TryParse(ranges[0], out var minPrice) && decimal.TryParse(ranges[1], out var maxPrice))
-                {
-                    return product.Price >= minPrice && product.Price <= maxPrice;
-                }
+                return products.Where(p => p.Price >= minPrice && p.Price <= maxPrice).ToList();
             }
-            else if (PriceRange == "800+")
+            else if (priceRange == "800+")
             {
-                return product.Price > 800;
+                return products.Where(p => p.Price > 800).ToList();
             }
 
-            return false;
+            return products;
+        }
+
+        private List<Product> SortProducts(List<Product> products, string sortOrder)
+        {
+            return sortOrder switch
+            {
+                "name_asc" => products.OrderBy(p => p.Name).ToList(),
+                "name_desc" => products.OrderByDescending(p => p.Name).ToList(),
+                "price_asc" => products.OrderBy(p => p.Price).ToList(),
+                "price_desc" => products.OrderByDescending(p => p.Price).ToList(),
+                _ => products,
+            };
         }
     }
 }

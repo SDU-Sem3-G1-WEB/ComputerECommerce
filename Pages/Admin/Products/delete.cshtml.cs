@@ -1,52 +1,55 @@
 using System.Diagnostics;
-using ComputerECommerce.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Services;
 
 namespace ComputerECommerce.Pages.Admin.Products
 {
     public class DeleteModel : PageModel
     {
-        private readonly DataContext context;
+        private readonly ProductService productService;
         private readonly IWebHostEnvironment env;
-        public DeleteModel(IWebHostEnvironment env, DataContext context)
+
+        public DeleteModel(IWebHostEnvironment env, ProductService productService)
         {
             this.env = env;
-            this.context = context;
+            this.productService = productService;
         }
-        public void OnGet(string? id)
+
+        public async Task<IActionResult> OnGetAsync(int id)
         {
-            Debug.WriteLine("Delete Product Id: " + id);
-            if(id == null)
+            await Protect();
+            var product = productService.GetProductById(id);
+
+            string filePath = env.WebRootPath + product!.Image;
+
+            if(System.IO.File.Exists(filePath))
             {
-                Debug.WriteLine("Product Id is null");
-                Response.Redirect("/Admin/Products/Index");
+                System.IO.File.Delete(filePath);
+            }
+
+            productService.DeleteProduct(id);
+
+            return RedirectToPage("/Admin/Products/Index");
+        }
+        private async Task Protect()
+        {
+            var userId = HttpContext.Session.GetInt32("UserId");
+            if (userId == null)
+            {
+                // Redirect to login if user is not logged in
+                Response.Redirect("/Account/Login");
+                await Task.CompletedTask;
                 return;
             }
-            var product = context.Products.Find(id);
-            if(product == null)
+
+            var userType = HttpContext.Session.GetString("UserType");
+            if (userType != "ADMIN")
             {
-                Debug.WriteLine("Product not found in context");
-                Response.Redirect("/Admin/Products/Index");
-                return;
+                // Redirect to unauthorized page if user is not an admin
+                Response.Redirect("/Unauthorised");
+                await Task.CompletedTask;
             }
-
-            if(product.Image != "/images/products/laptop.jpg")
-            {
-                string filePath = env.WebRootPath + product.Image;
-                Debug.WriteLine("\n\n\nTrying to delete file: " + filePath);
-                if(System.IO.File.Exists(filePath))
-                {
-                    Debug.WriteLine("Deleting file: " + filePath);
-                    System.IO.File.Delete(filePath);
-                }
-            }
-
-            context.Products.Remove(product);
-
-            context.SaveChanges();
-
-            Response.Redirect("/Admin/Products/Index");
         }
     }
 }

@@ -1,9 +1,7 @@
-using System.Data;
-using ComputerECommerce.Data;
-using ComputerECommerce.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using ComputerECommerce.Models;
+using Services;
 
 namespace ComputerECommerce.Pages.Admin.Products
 {
@@ -11,59 +9,78 @@ namespace ComputerECommerce.Pages.Admin.Products
     {
         [BindProperty]
         public ProductDto ProductDto { get; set; } = new ProductDto();
-        private readonly DataContext context;
         private readonly IWebHostEnvironment env;
-        public string ErrorMessage { get; set; } = String.Empty;
-        public string SuccessMessage { get; set; } = String.Empty;
+        private readonly CategoryService categoryService;
+        private readonly ProductService productService;
+        private readonly UserPermissionService userPermissionService;
+        public string ErrorMessage { get; set; } = string.Empty;
+        public string SuccessMessage { get; set; } = string.Empty;
         public List<Category> Categories { get; set; } = new List<Category>();
 
-        public CreateModel(IWebHostEnvironment env, DataContext context)
+        public CreateModel(IWebHostEnvironment env, CategoryService categoryService, ProductService productService, UserPermissionService userPermissionService)
         {
             this.env = env;
-            this.context = context;
+            this.categoryService = categoryService;
+            this.productService = productService;
+            this.userPermissionService = userPermissionService;
         }
 
-        public void OnGet()
+        public async Task<IActionResult> OnGetAsync()
         {
-            Categories = context.Categories.ToList();
+            await Protect();
+            Categories =  categoryService.GetAllCategories();
+            return Page();
         }
 
-        public void OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
-            if (ProductDto.ImageFile == null)
+            await Protect();
+            if (ProductDto.Image == null)
             {
                 ModelState.AddModelError("ProductDto.ImageFile", "Image is required");
             }
             if (!ModelState.IsValid)
             {
                 ErrorMessage = "Please provide all required fields";
-                return;
+                return Page();
             }
-            string fileName = Guid.NewGuid() + ProductDto.ImageFile!.FileName;
+            string fileName = Guid.NewGuid() + ProductDto.Image!.FileName;
             string filePath = Path.Combine(env.WebRootPath, "images", "products", fileName);
             using (var fileStream = new FileStream(filePath, FileMode.Create))
             {
-                ProductDto.ImageFile.CopyTo(fileStream);
+                ProductDto.Image.CopyTo(fileStream);
             }
-            Product product = new Product
-            {
-                Id = Guid.NewGuid().ToString(),
-                Name = ProductDto.Name,
-                Description = ProductDto.Description,
-                Price = ProductDto.Price,
-                Quantity = ProductDto.Quantity,
-                Image = "/images/products/" + fileName,
-                CategoryId = ProductDto.CategoryId
-            };
 
-            context.Products.Add(product);
-            context.SaveChanges();
+            fileName = "/images/products/" + fileName;
+
+            productService.AddProduct(ProductDto.Name, ProductDto.Manufacturer, ProductDto.Description, ProductDto.Price, fileName, ProductDto.Quantity, ProductDto.CategoryId);
 
             ProductDto.Clear();
 
             ModelState.Clear();
 
             SuccessMessage = "Product created successfully";
+            return Page();
+        }
+
+        private async Task Protect()
+        {
+            var userId = HttpContext.Session.GetInt32("UserId");
+            if (userId == null)
+            {
+                // Redirect to login if user is not logged in
+                Response.Redirect("/Account/Login");
+                await Task.CompletedTask;
+                return;
+            }
+
+            var userType = HttpContext.Session.GetString("UserType");
+            if (userType != "ADMIN")
+            {
+                // Redirect to unauthorized page if user is not an admin
+                Response.Redirect("/Unauthorised");
+                await Task.CompletedTask;
+            }
         }
     }
 }

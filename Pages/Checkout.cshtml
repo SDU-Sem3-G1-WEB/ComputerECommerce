@@ -1,0 +1,28 @@
+@page
+@model ComputerECommerce.Pages.CheckoutModel
+@{
+    ViewData["Title"] = "Checkout";
+}
+
+<div class="container mt-5">
+    <h2>Checkout</h2>
+    <form method="post">
+        <div class="mb-3">
+            <label for="addressLine" class="form-label">Address Line</label>
+            <input type="text" class="form-control" id="addressLine" name="AddressLine" required>
+        </div>
+        <div class="mb-3">
+            <label for="city" class="form-label">City</label>
+            <input type="text" class="form-control" id="city" name="City" required>
+        </div>
+        <div class="mb-3">
+            <label for="postalCode" class="form-label">Postal Code</label>
+            <input type="text" class="form-control" id="postalCode" name="PostalCode" required>
+        </div>
+        <div class="mb-3">
+            <label for="country" class="form-label">Country</label>
+            <input type="text" class="form-control" id="country" name="Country" required>
+        </div>
+        <button type="submit" class="btn btn-success">Place Order</button>
+    </form>
+</div>

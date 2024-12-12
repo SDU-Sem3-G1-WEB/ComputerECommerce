@@ -15,7 +15,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">  ComputerECommerce</a>
+                <a class="navbar-brand" asp-area="" asp-page="/Index">ComputerECommerce</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -25,33 +25,38 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
                         </li>
-                        @if (LoginModel.UserRole == "Admin")
-                        {
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Admin/Products/Index">Edit Products</a>
-                        </li>
-                        }
-                        <li>
-                            <a class="nav-link text-dark" asp-area="" asp-page="/CustomerSupport/Faq">Customer Support</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                    <ul class="navbar-nav">
-                        @{
-                            var currentPage = ViewContext.ActionDescriptor.DisplayName;
-                        }
-                        @if (string.IsNullOrEmpty(LoginModel.UserRole) && !currentPage.Contains("Login"))
+                        @if (Context.Session.GetString("UserType") == "ADMIN")
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-page="/Login">Log In</a>
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Admin/Products/Index">Edit Products</a>
                             </li>
                         }
-                        else if (!string.IsNullOrEmpty(LoginModel.UserRole))
+                        else
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-page="/Login" onclick="document.getElementById('logoutForm').submit();">Log Out</a>
+                                <a class="nav-link text-dark" asp-area="" asp-page="/CustomerSupport/Faq">Customer Support</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
+                            </li>
+                        }
+
+                    </ul>
+                    <ul class="navbar-nav">
+                        @if (Context.Session.GetString("IsLoggedIn") == "true")
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/ShoppingCart">Cart</a>
+                            </li>
+                            
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" href="javascript:document.getElementById('logoutForm').submit();">Log Out</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Account/Login">Log In</a>
                             </li>
                         }
                     </ul>
@@ -73,7 +78,7 @@
 
     @RenderSection("Scripts", required: false)
 
-    <form id="logoutForm" method="post" asp-page="/Login" style="display:none;">
+    <form id="logoutForm" method="post" asp-page="/Account/Logout" style="display:none;">
         <input type="hidden" name="logout" value="true" />
     </form>
 </body>

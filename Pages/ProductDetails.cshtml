@@ -4,19 +4,32 @@
     ViewData["Title"] = "Product Details";
 }
 
-<div class="container mt-4">
+<div class="container mt-5">
     <div class="row">
-        <div class="col-md-6">
-            <div class="card">
-                <img src="@Model.Product.Image" class="card-img-top img-fluid" alt="@Model.Product.Name">
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm">
+                <img src="@Model.Product!.Image" class="card-img-top img-fluid rounded" alt="@Model.Product.Name">
             </div>
         </div>
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-body">
-                    <h2 class="card-title">@Model.Product.Name</h2>
-                    <h4 class="card-subtitle mb-2 text-muted">@Model.Product.Price.ToString("C")</h4>
-                    <p class="card-text">@Model.Product.Description</p>
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body d-flex flex-column">
+                    <h2 class="card-title mb-3">@Model.Product.Name</h2>
+                    <h4 class="card-subtitle mb-3 text-muted">@Model.Product.Price.ToString("C")</h4>
+                    <p class="card-text mb-3">@Model.Product.Description</p>
+                    <hr>
+                    <p class="text-muted mb-2"><strong>Manufacturer:</strong> @Model.Product.Manufacturer</p>
+                    <p class="text-muted mb-4"><strong>Available Quantity:</strong> @Model.Product.Quantity</p>
+                    <form method="post">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <div class="d-flex align-items-center">
+                                <label for="quantity" class="form-label me-2">Quantity:</label>
+                                <input type="number" id="quantity" name="quantity" class="form-control" 
+                                       min="1" max="@Model.Product.Quantity" value="1" style="width: 100px;">
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-lg">Add to Cart</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

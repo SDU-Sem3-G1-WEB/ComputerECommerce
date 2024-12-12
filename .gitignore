@@ -72,3 +72,10 @@ publish/
 
 # Ignore auto-generated AssemblyInfo files
 **/AssemblyInfo.cs
+
+user.sql
+.env
+
+# Ignore virtual environment directory
+venv/
+DataAccess/_Setup/venv/

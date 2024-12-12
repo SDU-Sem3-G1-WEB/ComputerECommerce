@@ -15,6 +15,7 @@
     <tr>
         <th>ID</th>
         <th>Name</th>
+        <th>Manufacturer</th>
         <th>Category</th>
         <th>Quantity</th>
         <th>Price</th>
@@ -28,7 +29,8 @@
             <tr>
                 <td>@product.Id</td>
                 <td>@product.Name</td>
-                <td>@Model.Categories.FirstOrDefault(x => x.Id == product.CategoryId)?.Name</td>
+                <td>@product.Manufacturer</td>
+                <td>@Model.GetCategoryForProduct(product.CategoryId)</td>
                 <td>@product.Quantity</td>
                 <td>@product.Price</td>
                 <td><img src="@product.Image" width="100"/></td>
