@@ -19,11 +19,9 @@ jobs:
 
     - name: Restore dependencies (ComputerECommerce)
       run: dotnet restore
-      working-directory: ComputerECommerce
 
     - name: Build (ComputerECommerce)
       run: dotnet build --no-restore
-      working-directory: ComputerECommerce
     
   test:
     runs-on: ubuntu-latest
@@ -39,7 +37,6 @@ jobs:
 
     - name: Restore dependencies (ComputerECommerce)
       run: dotnet restore
-      working-directory: ComputerECommerce
     
     - name: Test application (ComputerEcommerce)
       run: dotnet test
