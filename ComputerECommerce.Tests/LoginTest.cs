@@ -1,33 +1,60 @@
+using System.ComponentModel.DataAnnotations;
 using ComputerECommerce.Data;
 using NUnit.Framework;
+using Moq;
+using Microsoft.EntityFrameworkCore;
+using ComputerECommerce.Models;
 
 namespace ComputerECommerce.Tests;
 
 [TestFixture]
 public class LoginTests
 {
-    private readonly LoginModel _loginModel;
-    private readonly DataContext _context;
-    private readonly LoginModel.InputModel _input;
-    private readonly string _userRole;
-    public LoginTests()
+    private DataContext _context;
+    private LoginModel _loginModel;
+    [SetUp]
+    public void SetUp()
     {
+        var options = new DbContextOptionsBuilder<DataContext>()
+            .UseInMemoryDatabase(databaseName: "postgres_db")
+            .Options;
+
+        _context = new DataContext(options);
+
+        _context.Users.AddRange(
+            new User
+            {
+                Id = Guid.NewGuid().ToString(),
+                Name = "Admin",
+                Email = "admin@admin.com",
+                Password = "admin",
+                Role = "Admin"
+            },
+            new User
+            {
+                Id = Guid.NewGuid().ToString(),
+                Name = "User",
+                Email = "user@user.com",
+                Password = "user",
+                Role = "User"
+            }
+        );
+
+        _context.SaveChanges();
+
         _loginModel = new LoginModel(_context);
-        _input = new LoginModel.InputModel();
-        _userRole = LoginModel.UserRole;
     }
     [Test]
-    public static void AdminLoginCorrect()
+    public void AdminLoginCorrect()
     {
-        var test = new LoginTests();
-        var userrole = test._userRole;
-        test._loginModel.Input = new LoginModel.InputModel
+        _loginModel.Input = new LoginModel.InputModel
         {
-           Username = "admin@admin.com",
-           Password = "admin"
+            Username = "admin@admin.com",
+            Password = "admin"
         };
 
-        var result = test._loginModel.OnPost();
+        var result = _loginModel.OnPost();
+        var userrole = LoginModel.UserRole;
 
         Assert.That(userrole, Is.EqualTo("Admin"));
     }
