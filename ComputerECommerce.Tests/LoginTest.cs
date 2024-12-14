@@ -58,4 +58,18 @@ public class LoginTests
 
         Assert.That(userrole, Is.EqualTo("Admin"));
     }
+    [Test]
+    public void UserLoginCorrect()
+    {
+        _loginModel.Input = new LoginModel.InputModel
+        {
+            Username = "user@user.com",
+            Password = "user"
+        };
+
+        var result = _loginModel.OnPost();
+        var userrole = LoginModel.UserRole;
+
+        Assert.That(userrole, Is.EqualTo("User"));
+    }
 }
