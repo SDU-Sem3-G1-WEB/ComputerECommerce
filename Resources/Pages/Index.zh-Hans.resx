@@ -124,10 +124,10 @@
     <value>主页</value>
   </data>
   <data name="Name (A-Z)" xml:space="preserve">
-    <value>首字母（A-Z）</value>
+    <value>首字母(A-Z)</value>
   </data>
   <data name="Name (Z-A)" xml:space="preserve">
-    <value>首字母 （Z-A）</value>
+    <value>首字母 (Z-A)</value>
   </data>
   <data name="Price (High-Low)" xml:space="preserve">
     <value>价格（高-低）</value>
