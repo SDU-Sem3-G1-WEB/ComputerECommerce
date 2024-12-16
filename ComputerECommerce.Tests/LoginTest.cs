@@ -72,4 +72,43 @@ public class LoginTests
 
         Assert.That(userrole, Is.EqualTo("User"));
     }
+    [Test]
+    public void AdminLoginInCorrect()
+    {
+        _loginModel.Input = new LoginModel.InputModel
+        {
+            Username = "admin@admin.com",
+            Password = "wrongPassAdmin" // wrong password
+        };
+
+        var result = _loginModel.OnPost();
+
+        Assert.That(_loginModel.ModelState[string.Empty]!.Errors[0].ErrorMessage, Is.EqualTo("Invalid login attempt."));
+    }
+    [Test]
+    public void UserLoginInCorrect()
+    {
+        _loginModel.Input = new LoginModel.InputModel
+        {
+            Username = "user@user.com",
+            Password = "wrongPassUser" // wrong password
+        };
+
+        var result = _loginModel.OnPost();
+
+        Assert.That(_loginModel.ModelState[string.Empty]!.Errors[0].ErrorMessage, Is.EqualTo("Invalid login attempt."));
+    }
+    [Test]
+    public void EmptyCredientialsLogin()
+    {
+        _loginModel.Input = new LoginModel.InputModel
+        {
+            Username = "",
+            Password = ""
+        };
+
+        var result = _loginModel.OnPost();
+
+        Assert.That(_loginModel.ModelState[string.Empty]!.Errors[0].ErrorMessage, Is.EqualTo("Invalid login attempt."));
+    }
 }
