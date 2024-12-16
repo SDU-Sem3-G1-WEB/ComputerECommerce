@@ -1,0 +1,22 @@
+@page
+@model TwoFAModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+<h2>Welcome!</h2>
+
+<h3>"A confirmation code has been sent to your E-Mail</h4>
+
+<form method="post">
+    <div class="form-group mb-3">
+        <label asp-for="Input.ConfirmationCode">Confirmation code</label>
+        <input asp-for="Input.ConfirmationCode" type="password" class="form-control" />
+        <span asp-validation-for="Input.ConfirmationCode" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Login</button>
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
 using ComputerECommerce.Data;
+using Microsoft.AspNetCore.Http;
 
 public class LoginModel : PageModel
 {
@@ -14,8 +15,7 @@ public class LoginModel : PageModel
 
     [BindProperty]
     public InputModel Input { get; set; }
-
-    public static string UserRole { get; private set; }
+    public static string Username { get; private set; }
 
     public class InputModel
     {
@@ -29,7 +29,6 @@ public class LoginModel : PageModel
 
     public void OnGet()
     {
-        UserRole = null;
     }
 
     public IActionResult OnPost()
@@ -48,8 +47,8 @@ public class LoginModel : PageModel
             return Page();
         }
 
-        UserRole = user.Role;
+        Username = user.Email;
 
-        return RedirectToPage("./Index");
+        return RedirectToPage("./TwoFA");
     }
 }

@@ -25,7 +25,7 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
                         </li>
-                        @if (LoginModel.UserRole == "Admin")
+                        @if (TwoFAModel.UserRole == "Admin")
                         {
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Admin/Products/Index">Edit Products</a>
@@ -42,13 +42,13 @@
                         @{
                             var currentPage = ViewContext.ActionDescriptor.DisplayName;
                         }
-                        @if (string.IsNullOrEmpty(LoginModel.UserRole) && !currentPage.Contains("Login"))
+                        @if (string.IsNullOrEmpty(TwoFAModel.UserRole) && !currentPage.Contains("Login"))
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-page="/Login">Log In</a>
                             </li>
                         }
-                        else if (!string.IsNullOrEmpty(LoginModel.UserRole))
+                        else if (!string.IsNullOrEmpty(TwoFAModel.UserRole))
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-page="/Login" onclick="document.getElementById('logoutForm').submit();">Log Out</a>

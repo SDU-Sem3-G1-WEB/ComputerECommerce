@@ -149,6 +149,14 @@ namespace ComputerECommerce.Data
                         Email = "user@user.com",
                         Password = "user",
                         Role = "User"
+                    },
+                    new User
+                    {
+                        Id = Guid.NewGuid().ToString(),
+                        Name = "Admin2",
+                        Email = "winjex1@gmail.com",
+                        Password = "sdfjkl",
+                        Role = "Admin"
                     }
                 );
 
