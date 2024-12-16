@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
 using ComputerECommerce.Data;
 using Microsoft.AspNetCore.Http;
+using ComputerECommerce.Pages;
 
 public class LoginModel : PageModel
 {
@@ -29,6 +30,7 @@ public class LoginModel : PageModel
 
     public void OnGet()
     {
+        TwoFAModel.UserRole = null;
     }
 
     public IActionResult OnPost()
@@ -43,7 +45,7 @@ public class LoginModel : PageModel
 
         if (user == null)
         {
-            ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+            ModelState.AddModelError(string.Empty, "Invalid E-Mail or Password.");
             return Page();
         }
 

@@ -24,7 +24,7 @@ namespace ComputerECommerce.Pages
             [Required]
             public string? ConfirmationCode { get; set; }
         }
-        public static string? UserRole { get; private set; }
+        public static string? UserRole { get; set; }
         public void OnGet()
         {
             ConfirmationCode = new Random().Next(100000, 999999).ToString();
